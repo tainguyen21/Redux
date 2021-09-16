@@ -1,6 +1,6 @@
 .header {
   padding: 1rem 0;
-  font-size: 1.25rem;
+  font-size: 1.8rem;
 
   &__title {
     font-weight: bold;
@@ -10,9 +10,9 @@
     color: #000;
     transition: all 0.25s ease-in-out 0s;
 
+    text-decoration: none;
     &--active,
     &:hover {
-      text-decoration: none;
       color: var(--primary);
     }
   }
