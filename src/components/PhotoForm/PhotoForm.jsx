@@ -1,11 +1,10 @@
 import { PHOTO_CATEGORY_OPTIONS } from "constants/global";
-import Images from "constants/images";
 import InputField from "custom-fields/InputField/InputField";
+import RandomPhotoField from "custom-fields/RandomPhotoField/RandomPhotoField";
 import SelectField from "custom-fields/SelectField/SelectField";
 import { FastField, Form, Formik } from "formik";
 import React from "react";
-import Select from "react-select";
-import { Button, FormGroup, Input, Label } from "reactstrap";
+import { Button, FormGroup } from "reactstrap";
 import "./PhotoForm.scss";
 
 PhotoForm.propTypes = {};
@@ -14,12 +13,16 @@ function PhotoForm() {
   const initialValues = {
     title: "",
     category: "",
+    photo: "",
   };
 
   return (
-    <Formik initialValues={initialValues}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(values) => console.log("Submit: ", values)}
+    >
       {(formikProps) => {
-        const { values, errors, touched } = formikProps;
+        //const { values, errors, touched } = formikProps;
 
         return (
           <Form>
@@ -38,26 +41,16 @@ function PhotoForm() {
               options={PHOTO_CATEGORY_OPTIONS}
             />
 
-            <FormGroup>
-              <Label for="categoryId">Photo</Label>
-
-              <div>
-                <Button type="button" outline color="primary">
-                  Random a photo
-                </Button>
-              </div>
-              <div>
-                <img
-                  width="200px"
-                  height="200px"
-                  src={Images.COLORFUL_BG}
-                  alt="colorful"
-                />
-              </div>
-            </FormGroup>
+            <FastField
+              name="photo"
+              component={RandomPhotoField}
+              label="Photo"
+            />
 
             <FormGroup>
-              <Button color="primary">Add to album</Button>
+              <Button type="submit" color="primary" className="my-btn">
+                Add to album
+              </Button>
             </FormGroup>
           </Form>
         );
