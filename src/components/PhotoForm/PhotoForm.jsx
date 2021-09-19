@@ -19,16 +19,14 @@ PhotoForm.defaultProps = {
 
 function PhotoForm(props) {
   const { onSubmit } = props;
-  const initialValues = {
-    title: "",
-    category: "",
-    photo: "",
-  };
+  const { initialValues, isAddMode } = props;
+
+  console.log(initialValues);
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("This field is required."),
-    category: Yup.number().required("This field is required.").nullable(),
-    photo: Yup.string().when("category", {
+    categoryId: Yup.number().required("This field is required.").nullable(),
+    photo: Yup.string().when("categoryId", {
       is: 1,
       then: Yup.string().required("This field is required."),
       otherwise: Yup.string().notRequired(),
@@ -54,7 +52,7 @@ function PhotoForm(props) {
             />
 
             <FastField
-              name="category"
+              name="categoryId"
               component={SelectField}
               label="Category"
               placeholder="What's your photo category?"
@@ -68,9 +66,13 @@ function PhotoForm(props) {
             />
 
             <FormGroup>
-              <Button type="submit" color="primary" className="my-btn">
+              <Button
+                type="submit"
+                color={isAddMode ? "primary" : "success"}
+                className="my-btn"
+              >
                 {isSubmitting && <Spinner size="sm" children="" />}
-                Add to album
+                {isAddMode ? "Add to album" : "Update your photo"}
               </Button>
             </FormGroup>
           </Form>
